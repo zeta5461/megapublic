@@ -4,7 +4,7 @@ title: '0002 · Split #4471 and deduplicate by cause'
 owner: Piotr Brzyski
 status: proposed
 reviewed: '2026-11-01'
-signature: 'Piotr Brzyski · S01E03 · 2026-11-01'
+signature: "v1.eyJzdWIiOiIxNTk2IiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTM1NjU5MDgsImV4cCI6MTc5MzY1MjMwOH0.GmgGO9W5oYIB2QHm33sMhvvOHUGxqYtVb0SDeyWW-ow"
 ---
 
 <script>
