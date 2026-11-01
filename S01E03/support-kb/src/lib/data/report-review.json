@@ -3,27 +3,27 @@
   "overrides": [
     {
       "id": "R-41202",
-      "problem": "day-discrepancy",
+      "problem": "timing",
       "reason": "Body describes a day discrepancy, not a day/month swap; root cause unverified."
     },
     {
       "id": "R-41209",
-      "problem": "day-discrepancy",
+      "problem": "timing",
       "reason": "Body describes a day discrepancy, not a day/month swap; root cause unverified."
     },
     {
       "id": "R-41236",
-      "problem": "premature-invite",
+      "problem": "timing",
       "reason": "Body describes invite arrival before booking, not a date-format reversal; root cause unverified."
     },
     {
       "id": "R-41344",
-      "problem": "day-discrepancy",
+      "problem": "timing",
       "reason": "Body describes a day discrepancy, not a day/month swap; root cause unverified."
     },
     {
       "id": "R-41620",
-      "problem": "day-discrepancy",
+      "problem": "timing",
       "reason": "Body describes a day discrepancy, not a day/month swap; root cause unverified."
     }
   ]
