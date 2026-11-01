@@ -16,6 +16,27 @@ signature: 'Piotr Brzyski · S01E03 · 2026-11-01'
   import ReviewedProblems from '#lib/kb/ReviewedProblems.svelte';
 </script>
 
+## Engineering outcome observed after the ticket step
+
+The course's engineering update for #4471 says **closed 05 oct**:
+
+| Problem | Outcome | Engineering reason | Our ticket |
+| --- | --- | --- | --- |
+| parser | fixed | `fix(dates): parse dd/mm for eu locales` | #1 closed as completed |
+| hint | won't fix | `booking-v3 form retired` | #2 closed as not planned |
+
+Source: the authenticated [S01E03 challenge page](https://hq.mega.dev/challenges/what-it-shows),
+checked 1 November 2026 after the course accepted the ticket step. The course called
+that step “Two tickets, both real” and required closure after #4471's work finished.
+The two closure reasons are different: retiring a form is not an implemented hint fix.
+
+The timing investigation #3 is withdrawn as unconfirmed, not marked fixed or counted
+as an accepted third resolution. The update gives no technical outcome for its five
+symptoms. Their bodies, attribution and uncertainty remain in the evidence below.
+The former separate premature-invite ticket #4 is also withdrawn into #3. Withdrawal
+is not completion. These closure outcomes supersede the earlier pending/queued
+language retained below as the export and review history.
+
 ## Context
 
 The incident page calls #4471 one known parser issue with one fix queued. Its exported
@@ -66,13 +87,13 @@ settings; correlate booking/message IDs and created, queued, sent and received
 timestamps. Check clock skew and stale messages before accepting the reported
 pre-booking arrival as a real ordering violation.
 
-The three tickets are:
+The reviewed report grouping was recorded in these tickets; the lifecycle outcomes above now apply:
 
 - [1: Shared parser reads day-first tenant dates as month-first](https://github.com/zeta5461/megapublic/issues/1)
 - [2: booking-v3 date hint contradicts day-first form parsing](https://github.com/zeta5461/megapublic/issues/2)
 - [3: Investigate invite date/time and delivery-order discrepancies](https://github.com/zeta5461/megapublic/issues/3)
 
-The former premature-invite ticket #4 is to be closed as withdrawn and incorporated
+The former premature-invite ticket #4 is closed as withdrawn and incorporated
 into #3. It is not a fourth accepted or completed problem.
 
 <Callout kind="warn">
