@@ -1,0 +1,161 @@
+---
+layout: runbook
+title: '0002 · Split #4471 and deduplicate by cause'
+owner: Piotr Brzyski
+status: proposed
+reviewed: '2026-11-01'
+signature: 'Piotr Brzyski · S01E03 · 2026-11-01'
+---
+
+<script>
+  import CauseTable from '#lib/kb/CauseTable.svelte';
+  import QueueTimeline from '#lib/kb/QueueTimeline.svelte';
+  import DedupeExplorer from '#lib/kb/DedupeExplorer.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import ReviewedProblems from '#lib/kb/ReviewedProblems.svelte';
+</script>
+
+## Context
+
+The incident page calls #4471 one known parser issue with one fix queued. Its exported
+components distinguish the shared parser from the booking form's date hint, but their
+classifier never reads report bodies. The desk-noted timing reports expose its blind
+spot. Neither a matching subject nor the classifier's label establishes a shared cause.
+
+This review uses the KB export dated 4 October 2026. It is not a live view of today's
+support queue. Deduplicate overlapping export pages by report ID before counting.
+The original table computes its own classification from tenant and channel data;
+browser locale and intake tags are not its classifier inputs. The reviewed split
+below also accounts for evidence in the report bodies.
+
+## Original exported classification — not the reviewed ticket split
+
+<CauseTable ticket={4471} />
+
+This table is preserved as evidence of how the desk files reports. Its parser count
+includes all desk-noted timing reports because `causeOf` only checks tenant locale,
+form version and channel. Its “causes” heading is the component's label, not proof
+that it explains every body. The desk note only lists IDs under `oneDayMove`; there
+is no separate diagnostic note for each ID.
+
+## Revised problems and tickets
+
+<ReviewedProblems />
+
+**Parser:** the shared parser reads numeric dates month first for day-first tenants.
+Remove the desk-noted timing reports from its ticket count. The remaining group has
+explicit reversed numeric date pairs plus contextual assignments R-41290 (asks for
+day-first support), R-41417 (unspecified wrong day), R-41514 (dates-in-words workaround)
+and R-41615 (October becomes January). The generic wrong-day and workaround reports
+do not prove their mechanism; keep those assignments provisional. Fix the shared
+parser to respect an explicit date format and exchange unambiguous dates.
+
+**Hint:** booking-v3 prints `MM/DD/YYYY` while the form reads dates in the day-first
+tenant's order. Correct the displayed hint to match the input interpretation. This
+needs its own ticket and fix; a shared-parser fix alone does not fix the misleading
+form. It affects form reports from Alder Physio, Copper Studio and Pale Harbour.
+
+**Day discrepancy:** the body evidence supports an investigation separate from
+date-format reversal. Adjacent dates, a June-only one-day offset, different weekdays
+between Lisbon and Toronto, and a Tuesday shown as Monday do not establish one
+shared root cause. Time-zone conversion, date serialization and weekday display are
+hypotheses. Local days can legitimately differ across zones. Recover intended local
+dates, event instants, IANA zones, all-day flags and serialized invite values; split
+the investigation further if different mechanisms emerge.
+
+**Premature invite:** an invite reportedly arrived before booking creation. This
+concerns delivery or timestamp ordering, not an explicit one-day offset. Correlate
+booking/message IDs and created, queued, sent and received timestamps; check clock
+skew, display zones, stale messages and reused bookings. The root cause is unknown.
+
+The proposed tickets are “Shared parser reads day-first tenant dates as month-first”,
+“booking-v3 date hint contradicts day-first form parsing”, “Investigate day discrepancies
+independent of day/month parsing”, and “Investigate invite reportedly received before
+booking creation”. Complete ticket bodies are published at the links below.
+
+- [1: Shared parser reads day-first tenant dates as month-first](https://github.com/zeta5461/megapublic/issues/1)
+- [2: booking-v3 date hint contradicts day-first form parsing](https://github.com/zeta5461/megapublic/issues/2)
+- [3: Investigate day discrepancies independent of day/month parsing](https://github.com/zeta5461/megapublic/issues/3)
+- [4: Investigate invite reportedly received before booking creation](https://github.com/zeta5461/megapublic/issues/4)
+
+<Callout kind="warn">
+  The five desk-noted IDs are removed from the reviewed parser ticket. No report
+  in this set uses the form channel, so a booking-v3 form hint is not supported
+  for them. Tenant locale does not identify a time zone. The two investigation
+  tickets describe observed problems; they do not claim established root causes.
+</Callout>
+
+## Search for other reports with the same pattern
+
+Every unique body was checked for numeric date reversals and normalized text patterns.
+The numeric-pair check found explicit swaps; the non-matching bodies were read
+individually. All normalized patterns were inspected for additional timing language.
+No additional explicit one-day/location-dependent-day discrepancy or pre-booking
+invite claim was found in this export. Generic wrong-day statements remain uncertain
+contextual parser assignments, not proven exclusions of another cause. The audit
+retains every report ID and its reviewed assignment in `report-audit.json`.
+
+## What the queue shows
+
+<QueueTimeline ticket={4471} />
+
+Reports arrived over months; the large merge spike is a desk action, not the start
+of the incident. Reports continue after that spike. “Known” and “fix queued” are
+workflow labels, not evidence of resolution. Keep receiving and classifying new
+reports while engineering works; do not fold them into #4471 merely because the
+subject matches.
+
+The first desk-noted timing reports were received before the July bulk merge; the
+last was still being merged into the same ticket in October. Queue receipt and
+merge timestamps are not booking, event or delivery timestamps. They show how the
+desk handled reports, not when the underlying invite was sent or why a date changed.
+
+## Proposed decision
+
+This record proposes replacing [decision 0001](/kb/decisions/0001-dedupe-by-subject)
+and the subject-only rule in [triage](/kb/triage/dedupe). The accepted historical
+decision remains unchanged. Desk acceptance of this replacement is still pending.
+
+1. Read the report body, resolve the tenant, and check its locale, form version
+   and channel. Use `causeOf` and `sameCause` as routing context, with
+   `Intl.DateTimeFormat` for locale order. Check body evidence before accepting
+   their result; neither function establishes the mechanism of a timing anomaly.
+2. Merge only when the evidence supports the same cause. Different subjects can
+   describe the same cause; identical subjects can describe different causes.
+3. Unknown tenant or unplaced cause: keep apart and investigate. Do not treat two
+   unknowns as duplicates. Preserve report IDs and provenance when moving reports.
+4. Recompute ticket counts from unique report IDs. Preserve uncertain symptoms
+   explicitly and revisit the classifier when investigation contradicts it.
+5. Route date-format, form-hint, day-discrepancy and premature-invite reports to
+   their respective tickets. Keep investigations provisional, and split when
+   evidence reveals distinct causes. Verify fixes before marking reports resolved.
+
+## Check the rule against examples
+
+<DedupeExplorer />
+
+The rendered initial pair and case table exercise the exported locale/form logic;
+they do not exercise report-body interpretation. This saved
+HTML is a static render; changing the form controls requires a hydrated app.
+
+## Consequences
+
+Triage takes more reading than a subject-only merge, but keeps distinct fixes and
+their impact visible. The existing incident narrative and old triage rule should
+be updated by the desk when it accepts this proposal. Do not silently rewrite an
+accepted decision or present this proposal as already adopted.
+
+## Sources and verification
+
+The export's incident page supplies the “known” narrative; `reports-4471.json`
+supplies reports and timestamps; tenant JSON files supply locale and form version;
+`causes.ts` and `locales.ts` determine the original classifier; `desk-notes.json`
+identifies reports the desk listed as `oneDayMove`. Reviewed problem annotations
+in `report-review.json` separate their body evidence without changing the exported
+classifier. `ReviewedProblems.svelte` computes the revised counts and report evidence
+view. The original cause table, timeline, example table and desk reference were
+rendered from the supplied components, not copied as hand-entered results.
+Course acceptance remains pending.
+
+<RenderStamp {signature} />
