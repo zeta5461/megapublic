@@ -2,9 +2,8 @@
   "scope": "4 October 2026 export; report IDs, not customers or incidents",
   "counts": {
     "parser": 374,
-    "day-discrepancy": 4,
     "hint": 33,
-    "premature-invite": 1
+    "timing": 5
   },
   "allReports": [
     {
@@ -88,7 +87,7 @@
       },
       "deskNote": "oneDayMove",
       "exportedCause": "parser",
-      "reviewedProblem": "day-discrepancy",
+      "reviewedProblem": "timing",
       "evidence": "individual body review; see evidence report",
       "receivedWeek": "2026-03-30",
       "mergedWeek": "2026-06-29",
@@ -262,7 +261,7 @@
       },
       "deskNote": "oneDayMove",
       "exportedCause": "parser",
-      "reviewedProblem": "day-discrepancy",
+      "reviewedProblem": "timing",
       "evidence": "individual body review; see evidence report",
       "receivedWeek": "2026-04-06",
       "mergedWeek": "2026-06-29",
@@ -1016,7 +1015,7 @@
       },
       "deskNote": "oneDayMove",
       "exportedCause": "parser",
-      "reviewedProblem": "premature-invite",
+      "reviewedProblem": "timing",
       "evidence": "individual body review; see evidence report",
       "receivedWeek": "2026-04-20",
       "mergedWeek": "2026-06-29",
@@ -4090,7 +4089,7 @@
       },
       "deskNote": "oneDayMove",
       "exportedCause": "parser",
-      "reviewedProblem": "day-discrepancy",
+      "reviewedProblem": "timing",
       "evidence": "individual body review; see evidence report",
       "receivedWeek": "2026-06-08",
       "mergedWeek": "2026-06-29",
@@ -11949,7 +11948,7 @@
       },
       "deskNote": "oneDayMove",
       "exportedCause": "parser",
-      "reviewedProblem": "day-discrepancy",
+      "reviewedProblem": "timing",
       "evidence": "individual body review; see evidence report",
       "receivedWeek": "2026-09-28",
       "mergedWeek": "2026-09-28",
@@ -12479,5 +12478,6 @@
         "R-41620"
       ]
     }
-  ]
+  ],
+  "revisionReason": "Course rejected four tickets: Two of yours are the same problem. Combine the desk-noted timing subcases, without asserting a proven common mechanism."
 }
