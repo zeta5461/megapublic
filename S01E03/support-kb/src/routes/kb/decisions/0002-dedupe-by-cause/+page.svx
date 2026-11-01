@@ -56,34 +56,30 @@ tenant's order. Correct the displayed hint to match the input interpretation. Th
 needs its own ticket and fix; a shared-parser fix alone does not fix the misleading
 form. It affects form reports from Alder Physio, Copper Studio and Pale Harbour.
 
-**Day discrepancy:** the body evidence supports an investigation separate from
-date-format reversal. Adjacent dates, a June-only one-day offset, different weekdays
-between Lisbon and Toronto, and a Tuesday shown as Monday do not establish one
-shared root cause. Time-zone conversion, date serialization and weekday display are
-hypotheses. Local days can legitimately differ across zones. Recover intended local
-dates, event instants, IANA zones, all-day flags and serialized invite values; split
-the investigation further if different mechanisms emerge.
+**Timing:** treat the desk-noted reports as one timing investigation, preserving
+both day-discrepancy and invite-ordering symptom subcases. The course rejected the
+prior separation of these subcases, stating “Two of yours are the same problem.”
+This revision follows that feedback and the desk's complete `oneDayMove` grouping.
+Neither grouping proves a shared implementation fault. Recover intended local
+dates, event instants, IANA zones, all-day flags, serialized invite values and viewer
+settings; correlate booking/message IDs and created, queued, sent and received
+timestamps. Check clock skew and stale messages before accepting the reported
+pre-booking arrival as a real ordering violation.
 
-**Premature invite:** an invite reportedly arrived before booking creation. This
-concerns delivery or timestamp ordering, not an explicit one-day offset. Correlate
-booking/message IDs and created, queued, sent and received timestamps; check clock
-skew, display zones, stale messages and reused bookings. The root cause is unknown.
-
-The proposed tickets are “Shared parser reads day-first tenant dates as month-first”,
-“booking-v3 date hint contradicts day-first form parsing”, “Investigate day discrepancies
-independent of day/month parsing”, and “Investigate invite reportedly received before
-booking creation”. Complete ticket bodies are published at the links below.
+The three tickets are:
 
 - [1: Shared parser reads day-first tenant dates as month-first](https://github.com/zeta5461/megapublic/issues/1)
 - [2: booking-v3 date hint contradicts day-first form parsing](https://github.com/zeta5461/megapublic/issues/2)
-- [3: Investigate day discrepancies independent of day/month parsing](https://github.com/zeta5461/megapublic/issues/3)
-- [4: Investigate invite reportedly received before booking creation](https://github.com/zeta5461/megapublic/issues/4)
+- [3: Investigate invite date/time and delivery-order discrepancies](https://github.com/zeta5461/megapublic/issues/3)
+
+The former premature-invite ticket #4 is to be closed as withdrawn and incorporated
+into #3. It is not a fourth accepted or completed problem.
 
 <Callout kind="warn">
   The five desk-noted IDs are removed from the reviewed parser ticket. No report
   in this set uses the form channel, so a booking-v3 form hint is not supported
-  for them. Tenant locale does not identify a time zone. The two investigation
-  tickets describe observed problems; they do not claim established root causes.
+  for them. Tenant locale does not identify a time zone. The timing investigation
+  preserves observed subcases without claiming an established root cause.
 </Callout>
 
 ## Search for other reports with the same pattern
@@ -127,9 +123,9 @@ decision remains unchanged. Desk acceptance of this replacement is still pending
    unknowns as duplicates. Preserve report IDs and provenance when moving reports.
 4. Recompute ticket counts from unique report IDs. Preserve uncertain symptoms
    explicitly and revisit the classifier when investigation contradicts it.
-5. Route date-format, form-hint, day-discrepancy and premature-invite reports to
-   their respective tickets. Keep investigations provisional, and split when
-   evidence reveals distinct causes. Verify fixes before marking reports resolved.
+5. Route parser, form-hint and timing reports to their respective tickets. Preserve
+   timing subcases in the same investigation and verify the mechanism and fixes
+   before marking reports resolved.
 
 ## Check the rule against examples
 
