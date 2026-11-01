@@ -10,8 +10,7 @@
   const labels = new Map([
     ['parser', 'Shared parser — body-supported or contextual'],
     ['hint', 'booking-v3 hint'],
-    ['day-discrepancy', 'Day discrepancy — investigate'],
-    ['premature-invite', 'Invite received before booking — investigate']
+    ['timing', 'Invite date/time and delivery-order discrepancies — investigate']
   ]);
   const groups = [...labels].map(([key, label]) => ({ label, reports: reviewed.filter((r) => r.problem === key) }));
   const anomalies = reviewed.filter((r) => overrides.has(r.id));
