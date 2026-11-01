@@ -1,0 +1,30 @@
+{
+  "scope": "4 October 2026 export; report IDs, not customers or incidents",
+  "overrides": [
+    {
+      "id": "R-41202",
+      "problem": "day-discrepancy",
+      "reason": "Body describes a day discrepancy, not a day/month swap; root cause unverified."
+    },
+    {
+      "id": "R-41209",
+      "problem": "day-discrepancy",
+      "reason": "Body describes a day discrepancy, not a day/month swap; root cause unverified."
+    },
+    {
+      "id": "R-41236",
+      "problem": "premature-invite",
+      "reason": "Body describes invite arrival before booking, not a date-format reversal; root cause unverified."
+    },
+    {
+      "id": "R-41344",
+      "problem": "day-discrepancy",
+      "reason": "Body describes a day discrepancy, not a day/month swap; root cause unverified."
+    },
+    {
+      "id": "R-41620",
+      "problem": "day-discrepancy",
+      "reason": "Body describes a day discrepancy, not a day/month swap; root cause unverified."
+    }
+  ]
+}
